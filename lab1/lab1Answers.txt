@@ -1,0 +1,63 @@
+Lab 1
+
+two nodes:
+
+1.
+(1.008, 1, 0, 1.008, 0.008, 1.0, 0)
+
+packet 1
+time created: 0
+identifier: 1 
+time received: 1.008
+
+2.
+(80.01, 1, 0, 80.01, 80.0, 0.01, 0)
+
+packet 1
+time created: 0
+identifier: 1 
+time received: 80.01
+
+
+3.
+
+(0.018000000000000002, 1, 0, 0.018000000000000002, 0.008, 0.01, 0)
+(0.026000000000000002, 2, 0, 0.026000000000000002, 0.008, 0.01, 0.008)
+(0.034, 3, 0, 0.034, 0.008, 0.01, 0.016)
+(2.018, 4, 2.0, 0.017999999999999794, 0.008, 0.01, 0.0)
+
+packet 1
+time created: 0
+identifier: 1 
+time received: 0.018000000000000002
+
+packet 2
+time created: 0
+identifier: 2 
+time received: 0.026000000000000002
+
+packet 3
+time created: 0
+identifier: 3 
+time received: 0.034
+
+packet 4
+time created: 2
+identifier: 4 
+time received: 2.018
+
+three nodes
+
+1. fast links
+
+How long does it take to transfer a 1 MB file, divided into 1 kB packets, from A to C? 
+~8.208 seconds
+Which type of delay dominates?
+Transmission delay dominates
+
+If both links are upgraded to a rate of 1 Gbps, how long does it take to transfer a 1 MB file from A to C?
+~0.208008 seconds
+(Propagation delay dominates)
+
+2.slow links
+~31.458 seconds
