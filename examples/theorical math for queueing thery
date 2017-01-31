@@ -1,0 +1,10 @@
+w = 1/(2μ) x ρ/(1-ρ)
+service rate: 125
+utilization: x/1Mbps = 80% or whatev
+
+w = 1 / (2*125) x .80/(1-.80)
+   = 1/2 ms X 4
+   2
+   
+   95% = 19/2 = 10/u = 0.1
+   
