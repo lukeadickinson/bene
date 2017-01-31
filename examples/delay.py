@@ -11,6 +11,7 @@ from networks.network import Network
 
 import random
 
+myLoadPercent = 98
 
 class Generator(object):
     def __init__(self, node, destination, load, duration):
@@ -38,19 +39,22 @@ class Generator(object):
 class DelayHandler(object):
     @staticmethod
     def receive_packet(packet):
-        print((Sim.scheduler.current_time(),
-               packet.ident,
-               packet.created,
-               Sim.scheduler.current_time() - packet.created,
-               packet.transmission_delay,
-               packet.propagation_delay,
-               packet.queueing_delay))
+        #print((Sim.scheduler.current_time(),
+               #packet.ident,
+               #packet.created,
+               #Sim.scheduler.current_time() - packet.created,
+               #packet.transmission_delay,
+               #packet.propagation_delay,
+               #packet.queueing_delay))
+        f1=open('./experiment'+ str(myLoadPercent)+'.txt', 'a+')
+        f1.write(str(packet.queueing_delay) +"\n")
 
 
 def main():
     # parameters
     Sim.scheduler.reset()
-
+    f1=open('./experiment'+ str(myLoadPercent)+'.txt', 'w+')
+    f1.write("")
     # setup network
     net = Network('../networks/one-hop.txt')
 
@@ -67,7 +71,7 @@ def main():
     # setup packet generator
     destination = n2.get_address('n1')
     max_rate = 1000000 // (1000 * 8)
-    load = 0.8 * max_rate
+    load = myLoadPercent/100.0 * max_rate
     g = Generator(node=n1, destination=destination, load=load, duration=10)
     Sim.scheduler.add(delay=0, event='generate', handler=g.handle)
 
