@@ -27,8 +27,7 @@ def main():
     Sim.scheduler.reset()
 
     # setup network
-    #net = Network('lab1-twohopA.txt')
-    net = Network('lab1-twohopA2.txt')
+    net = Network('lab1-twohopA.txt')
 
     # setup routes
     n1 = net.get_node('n1')
@@ -45,8 +44,7 @@ def main():
     d = DelayHandler()
     net.nodes['n3'].add_protocol(protocol="delay", handler=d)
 
-    #trasmissionDelay = 8.0/1000.0    
-    trasmissionDelay = 8.0/10000000.0
+    trasmissionDelay = 8.0/1000.0    
     # send packets
     for i in range(1,1001):
         calculatedDelay = (i-1) * trasmissionDelay

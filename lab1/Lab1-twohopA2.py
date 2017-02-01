@@ -27,7 +27,6 @@ def main():
     Sim.scheduler.reset()
 
     # setup network
-    #net = Network('lab1-twohopA.txt')
     net = Network('lab1-twohopA2.txt')
 
     # setup routes
