@@ -3,8 +3,6 @@ import sys
 
 import pandas as pd
 import matplotlib.pyplot as plt
-import plotly.plotly as py
-import plotly.graph_objs as go
 # Class that parses a file and plots several graphs
 class Plotter:
     def __init__(self):
@@ -13,34 +11,23 @@ class Plotter:
         pass
 
     def linePlot(self):
-        """ Create a line graph. """
-        data = pd.read_csv("data1.csv")
-		data.head()
-		
-		trace1 = go.Scatter(
-                    x=df['Utilization'], y=df['Theory'], # Data
-                    mode='lines', name='Theory' # Additional options
-                   )
-trace2 = go.Scatter(x=df['x'], y=df['sinx'], mode='lines', name='sinx' )
-trace3 = go.Scatter(x=df['x'], y=df['cosx'], mode='lines', name='cosx')
-
-layout = go.Layout(title='Simple Plot from csv data',
-                   plot_bgcolor='rgb(230, 230,230)')
-
-fig = go.Figure(data=[trace1, trace2, trace3], layout=layout)
-
-# Plot data in the notebook
-py.iplot(fig, filename='simple-plot-from-csv')
-		
-		plt.plot(x, np.sin(x - 0), color='blue')
-		plt.plot(x, np.sin(x - 0), color='blue')
-        plt.figure()
-        ax = data.plot(x='Utilization',y='Theory')
-        bx = data.plot(x='Utilization',y='Average')
-        ax.set_xlabel("Utilization")
-        ax.set_ylabel("Queueing Delay")
-        fig = ax.get_figure()
-        fig.savefig('line.png')
+		raw_data = {
+		'Utilization': [10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 98, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 98],
+		'Queueing Delay': [0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.000246186799194, 0.000744426315041, 0.00180887562312, 0.00207776042834, 0.00370991960505, 0.00617988242069, 0.0083786921238, 0.0148861562441,0.0422212596784, 0.0289565539489, 0.0457814929168],
+		'type': ['Theory','Theory','Theory','Theory','Theory','Theory','Theory','Theory','Theory','Theory','Theory','Average','Average','Average','Average','Average','Average','Average','Average','Average','Average','Average']
+		}
+		df = pd.DataFrame(raw_data, columns = ['Utilization', 'Queueing Delay', 'type'])
+		fig, ax = plt.subplots()
+		labels = []
+		for key, grp in df.groupby(['type']):
+			myColor = 'blue'
+			if key == 'Theory' :
+				myColor = 'green'
+			ax = grp.plot(ax=ax, kind='line', x='Utilization', y='Queueing Delay', c=myColor)
+			labels.append(key)
+		lines, _ = ax.get_legend_handles_labels()
+		ax.legend(lines, labels, loc='best')
+		plt.show()
 
 if __name__ == '__main__':
     p = Plotter()
