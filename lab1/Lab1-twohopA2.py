@@ -44,8 +44,8 @@ def main():
     d = DelayHandler()
     net.nodes['n3'].add_protocol(protocol="delay", handler=d)
 
-    #trasmissionDelay = 8.0/1000.0    
-    trasmissionDelay = 8.0/10000000.0
+    #8kbit/1Gbps = 8kbit/1000000kbps
+    trasmissionDelay = 8.0/1000000.0
     # send packets
     for i in range(1,1001):
         calculatedDelay = (i-1) * trasmissionDelay
