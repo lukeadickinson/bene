@@ -443,13 +443,16 @@ tDelay_{p1000\,at\,n2} &=  \frac{size\,of\,the\,packet} {link\,rates}\\
 &= 0.008 \,seconds\\
 time\,packet_{1000}\,is\,received\,at\,node_{2} &= 8.1\,seconds\\
 procDelay &= 0\,seconds\\
-propDelay_{n1} &= 0.1\,seconds\\
-qDelay_{p1000\,at\,n1} &= 0\\
+propDelay_{n2} &= 0.1\,seconds\\
+qDelay_{p1000\,at\,n2} &= 0\\
 time\,packet_{1000}\,is\,received\,at\,node_{3} &= \,time\,packet_{1000}\,is\,received\,at\,node_{2} + \\
 &\,\,\,\,\,\,\,\, + procDelay + propDelay_{n\,1} + tDelay_{p\,10000,at\,n\,1} \\
 &\,\,\,\,\,\,\,\, + qDelay_{p\,1000\,at\,n\,1}\\
 &= 8.1 + 0 + 0.1 + 0.008 + 0\,seconds\\
-&= 8.208\,seconds
+&= 8.208\,seconds \\
+\text{From our calculations we see that }
+&\text{packet$_{1000}$ is received at node$_3$ at 8.208 seconds,} \\
+\text{which matches our simulation.}
 \end{align*}
 \section{Section Name}
 
