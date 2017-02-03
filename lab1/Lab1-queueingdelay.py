@@ -11,7 +11,8 @@ from networks.network import Network
 
 import random
 
-
+	
+myLoadPercent = 98
 class Generator(object):
     def __init__(self, node, destination, load, duration):
         self.node = node
@@ -46,7 +47,7 @@ def main():
     Sim.scheduler.reset()
 
     # setup network
-    net = Network('../networks/one-hop.txt')
+    net = Network('Lab1-queueingdelay.txt')
 
     # setup routes
     n1 = net.get_node('n1')
@@ -58,14 +59,14 @@ def main():
     d = DelayHandler()
     net.nodes['n2'].add_protocol(protocol="delay", handler=d)
 
-	f1=open('./experiment'+ str(myLoadPercent)+'.txt', 'w+')
+
+    f1=open('./experiment'+ str(myLoadPercent)+'.txt', 'w+')
     f1.write("")
 	
     # setup packet generator
     destination = n2.get_address('n1')
     max_rate = 1000000 // (1000 * 8)
 		
-	myLoadPercent = 98
     load = myLoadPercent/100.0 * max_rate
     g = Generator(node=n1, destination=destination, load=load, duration=10)
     Sim.scheduler.add(delay=0, event='generate', handler=g.handle)
