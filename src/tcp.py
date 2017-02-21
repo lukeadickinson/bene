@@ -2,7 +2,7 @@ from .buffer import SendBuffer, ReceiveBuffer
 from .connection import Connection
 from .sim import Sim
 from .tcppacket import TCPPacket
-
+from sys import getsizeof
 
 class TCP(Connection):
     """ A TCP connection between two hosts."""
@@ -53,10 +53,10 @@ class TCP(Connection):
     ''' Sender '''
 
     def send(self, data):
-        """ Send data on the connection. Called by the application. This
-            code currently sends all data immediately. """
-        self.send_packet(data, self.sequence)
-        self.timer = Sim.scheduler.add(delay=self.timeout, event='retransmit', handler=self.retransmit)
+        self.send_buffer.put(data)
+        if(self.send_buffer.available() > 0 and self.send_buffer.outstanding() < self.window):
+            pulledData, sequence = self.send_buffer.get(self.mss)
+            self.send_packet(pulledData, sequence)
 
     def send_packet(self, data, sequence):
         packet = TCPPacket(source_address=self.source_address,
@@ -77,10 +77,26 @@ class TCP(Connection):
 
     def handle_ack(self, packet):
         """ Handle an incoming ACK. """
-        self.cancel_timer()
+        print("recevied ack:")
+        print(packet.ack_number)
+        if self.sequence < packet.ack_number :
+            print("bigger than sequence")
+            self.sequence = packet.ack_number
+            self.send_buffer.slide(self.sequence)
+            while(self.send_buffer.available() > 0 and self.send_buffer.outstanding() < self.window):
+                self.cancel_timer()
+                pulledData, sequence = self.send_buffer.get(self.mss)
+                self.send_packet(pulledData, sequence) 
+        if(self.send_buffer.outstanding() == 0):
+            self.cancel_timer()
+        
 
     def retransmit(self, event):
         """ Retransmit data. """
+        #todo
+        pulledData, sequence = self.send_buffer.resend(self.mss)
+        self.send_packet(pulledData, sequence)
+        self.timer = Sim.scheduler.add(delay=self.timeout, event='retransmit', handler=self.retransmit)
         self.trace("%s (%d) retransmission timer fired" % (self.node.hostname, self.source_address))
 
     def cancel_timer(self):
@@ -98,7 +114,11 @@ class TCP(Connection):
             an ACK."""
         self.trace("%s (%d) received TCP segment from %d for %d" % (
             self.node.hostname, packet.destination_address, packet.source_address, packet.sequence))
-        self.app.receive_data(packet.body)
+        
+        self.receive_buffer.put(packet.body,packet.sequence)
+        data, start = self.receive_buffer.get()
+        self.ack = start + len(data)
+        self.app.receive_data(data)
         self.send_ack()
 
     def send_ack(self):
