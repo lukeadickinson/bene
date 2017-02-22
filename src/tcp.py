@@ -8,7 +8,7 @@ class TCP(Connection):
     """ A TCP connection between two hosts."""
 
     def __init__(self, transport, source_address, source_port,
-                 destination_address, destination_port, app=None, window=1000):
+                 destination_address, destination_port, fastRetransmit=True, app=None, window=1000):
         Connection.__init__(self, transport, source_address, source_port,
                             destination_address, destination_port, app)
 
@@ -29,6 +29,12 @@ class TCP(Connection):
         # timeout duration in seconds
         self.timeout = 1
 
+        self.fastRetransmit = fastRetransmit
+        self.lastAckReceived = None
+        self.duplicateAckCount = 0
+
+        self.totalQueueingDelay = 0
+        self.packetsSent = 0
         # -- Receiver functionality
 
         # receive buffer
@@ -65,6 +71,12 @@ class TCP(Connection):
                            destination_port=self.destination_port,
                            body=data,
                            sequence=sequence, ack_number=self.ack)
+        self.totalQueueingDelay += Sim.scheduler.current_time()
+        self.packetsSent += 1.0
+        #uncomment these for queueing delay average
+        print("average Queueing Delay------------------------------")
+        print(self.totalQueueingDelay/self.packetsSent)
+        print(packet.queueing_delay)
 
         # send the packet
         self.trace("%s (%d) sending TCP segment to %d for %d" % (
@@ -77,10 +89,20 @@ class TCP(Connection):
 
     def handle_ack(self, packet):
         """ Handle an incoming ACK. """
-        print("recevied ack:")
-        print(packet.ack_number)
+        if self.fastRetransmit:
+            if self.lastAckReceived != packet.ack_number:
+               self.lastAckReceived = packet.ack_number
+               self.duplicateAckCount = 0
+            else :
+                self.duplicateAckCount += 1
+                if self.duplicateAckCount == 3:
+                    #do fastRetransmit
+                    print("fast retransmit for:")
+                    print("packet.ack_number")
+                    pulledData, sequence = self.send_buffer.resend(self.mss)
+                    self.send_packet(pulledData, sequence)
+    
         if self.sequence < packet.ack_number :
-            print("bigger than sequence")
             self.sequence = packet.ack_number
             self.send_buffer.slide(self.sequence)
             while(self.send_buffer.available() > 0 and self.send_buffer.outstanding() < self.window):
@@ -93,7 +115,6 @@ class TCP(Connection):
 
     def retransmit(self, event):
         """ Retransmit data. """
-        #todo
         pulledData, sequence = self.send_buffer.resend(self.mss)
         self.send_packet(pulledData, sequence)
         self.timer = Sim.scheduler.add(delay=self.timeout, event='retransmit', handler=self.retransmit)
@@ -114,7 +135,6 @@ class TCP(Connection):
             an ACK."""
         self.trace("%s (%d) received TCP segment from %d for %d" % (
             self.node.hostname, packet.destination_address, packet.source_address, packet.sequence))
-        
         self.receive_buffer.put(packet.body,packet.sequence)
         data, start = self.receive_buffer.get()
         self.ack = start + len(data)

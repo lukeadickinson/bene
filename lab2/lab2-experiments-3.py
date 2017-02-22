@@ -85,7 +85,7 @@ class Main(object):
         Sim.set_debug('TCP')
 
         # setup network
-        net = Network('../networks/one-hop.txt')
+        net = Network('../networks/one-hop-lab2-experiments.txt')
         net.loss(self.loss)
 
         # setup routes
@@ -102,8 +102,8 @@ class Main(object):
         a = AppHandler(self.filename)
 
         # setup connection
-        c1 = TCP(t1, n1.get_address('n2'), 1, n2.get_address('n1'), 1, self.retransmit, a, window=10000)
-        c2 = TCP(t2, n2.get_address('n1'), 1, n1.get_address('n2'), 1, self.retransmit, a, window=10000)
+        c1 = TCP(t1, n1.get_address('n2'), 1, n2.get_address('n1'), 1, self.retransmit, a, window=5000)
+        c2 = TCP(t2, n2.get_address('n1'), 1, n1.get_address('n2'), 1, self.retransmit, a, window=5000)
 
         # send a file
         with open(self.filename, 'rb') as f:

@@ -85,7 +85,7 @@ class Main(object):
         Sim.set_debug('TCP')
 
         # setup network
-        net = Network('../networks/one-hop.txt')
+        net = Network('../networks/one-hop-lab2.txt')
         net.loss(self.loss)
 
         # setup routes
