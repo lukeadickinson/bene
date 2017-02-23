@@ -19,7 +19,7 @@ class Plotter:
         ax.set_xlabel("Window Size (bytes)")
         ax.set_ylabel("Throughput (bps)")
         fig = ax.get_figure()
-        fig.savefig('line.png',bbox_inches='tight')
+        fig.savefig('lab2-graph1.png',bbox_inches='tight')
 
     def linePlotQueueingDelay(self):
         """ Create a line graph. """
@@ -29,7 +29,7 @@ class Plotter:
         ax.set_xlabel("Window Size (bytes)")
         ax.set_ylabel("Average Queueing Delay")
         fig = ax.get_figure()
-        fig.savefig('line2.png',bbox_inches='tight')
+        fig.savefig('lab2-graph2.png',bbox_inches='tight')
 
 if __name__ == '__main__':
     p = Plotter()
