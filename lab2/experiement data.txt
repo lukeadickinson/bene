@@ -193,44 +193,44 @@ queueing delay is mesaused as time spent in buffer? there isnt a queue.
 
 total bits sent: 514520
 total time to send: 10.701616
-throughput:48,078.72
+throughput:48,078.72 * 8 = 384629.76
 
-average queueing delay :5.3456
+average queueing delay :5.35639925437
 
 2000
 total bits sent:514520
 total time to send:5.356016
-throughput: 96,063.94
+throughput: 96,063.94 * 8 = 768511.52
 
-average queueing delay :2.66800776699
+average queueing delay :2.67880857476
 
 5000
 total bits sent:514520
 total time to send:2.135216
-throughput:240,968.59
+throughput:240968.59 * = 1927748.72
 
-average queueing delay :1.06238446602
+average queueing delay :1.07319925437
 
 10000
 total bits sent:514520
 total time to send:1.074416
-throughput: 478,883.41
+throughput: 478,883.41 * 8 = 3831067.28
 
-average queueing delay :0.528761165049
+average queueing delay :0.53963032233
 
 15000
 total bits sent:514520
 total time to send:0.720816
-throughput:713,802.13
+throughput:713,802.13 * 8 = 5710417.04
 
-average queueing delay :0.352132038835
+average queueing delay :0.3630944
 
 20000
 total bits sent:514520
 total time to send:0.541616
-throughput:949,971.94
+throughput:949,971.94 * 8 = 7599775.52 
 
-average queueing delay :0.264722330097
+average queueing delay :0.275816730097
 
 Compute the throughput of the transfer as the total bits sent divided by 
 the total time to send the file, measured from the start of the simulation 

@@ -71,12 +71,6 @@ class TCP(Connection):
                            destination_port=self.destination_port,
                            body=data,
                            sequence=sequence, ack_number=self.ack)
-        self.totalQueueingDelay += Sim.scheduler.current_time()
-        self.packetsSent += 1.0
-        #uncomment these for queueing delay average
-        print("average Queueing Delay------------------------------")
-        print(self.totalQueueingDelay/self.packetsSent)
-        print(packet.queueing_delay)
 
         # send the packet
         self.trace("%s (%d) sending TCP segment to %d for %d" % (
@@ -102,6 +96,8 @@ class TCP(Connection):
                     pulledData, sequence = self.send_buffer.resend(self.mss)
                     self.send_packet(pulledData, sequence)
     
+        self.totalQueueingDelay += packet.queueing_delay
+        self.packetsSent += 1.0
         if self.sequence < packet.ack_number :
             self.sequence = packet.ack_number
             self.send_buffer.slide(self.sequence)
@@ -135,6 +131,11 @@ class TCP(Connection):
             an ACK."""
         self.trace("%s (%d) received TCP segment from %d for %d" % (
             self.node.hostname, packet.destination_address, packet.source_address, packet.sequence))
+ 
+        self.totalQueueingDelay += packet.queueing_delay
+        self.packetsSent += 1.0
+        print("true Queueing Delay------------------------------")
+        print(self.totalQueueingDelay/self.packetsSent)
         self.receive_buffer.put(packet.body,packet.sequence)
         data, start = self.receive_buffer.get()
         self.ack = start + len(data)
