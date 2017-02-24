@@ -186,8 +186,17 @@ We will use the a similar network as in the previous sections. We use a network 
 
 To measure throughput, we take the file size and divide it by the time it takes for the file to completely transfer. We measure the average queueing delay by aggerating the total queueing delay experienced from every packet sent and dividing it by the total number of packets sent. 
 
-We will run our simulation 6 times, with the following windows sizes: 1,000, 2,000, 5,000, 10,000, 15,000, 20,000. It may be helpful to point out that because our mss is 1,000, a window size of 1,000 is a window size of 1 packet. This may be useful in understanding why there is no queueing delay.
+We will run our simulation 6 times, with the following windows sizes: 1,000, 2,000, 5,000, 10,000, 15,000, 20,000. It may be helpful to point out that because our mss is 1,000, a window size of 1,000 is a window size of 1 packet. This may be useful in understanding why there is no queueing delay.\\\\
+\subsection{Window Size Experiment Commands}
+The following commands are executed to run the experiments: \\\\
+For a window size of 1,000: python lab2-experiments-1.py -f internet-architecture.pdf\\
+For a window size of 2,000: python lab2-experiments-2.py -f internet-architecture.pdf\\
+For a window size of 5,000: python lab2-experiments-3.py -f internet-architecture.pdf\\
+For a window size of 10,000: python lab2-experiments-4.py -f internet-architecture.pdf\\
+For a window size of 15,000: python lab2-experiments-5.py -f internet-architecture.pdf\\
+For a window size of 20,000: python lab2-experiments-6.py -f internet-architecture.pdf\\
 
+\subsection{Data of Window Size Experiments}
 In the graphs below, we show our experimental data. \\
 
 \includegraphics[width=11cm]{lab2-graph1}\\

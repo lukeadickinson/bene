@@ -29,7 +29,6 @@ class AppHandler(object):
         self.f.write(data)
         self.f.flush()
 
-
 class Main(object):
     def __init__(self):
         self.directory = 'received'

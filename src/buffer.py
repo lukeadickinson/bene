@@ -1,5 +1,3 @@
-from sys import getsizeof
-
 class SendBuffer(object):
     """ Send buffer for transport protocols """
 
