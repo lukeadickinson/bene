@@ -7,7 +7,7 @@ sys.path.append('..')
 
 from src.sim import Sim
 from src.transport import Transport
-from lab2.tcp import TCP
+from lab3.tcp import TCP
 
 from networks.network import Network
 
@@ -29,7 +29,6 @@ class AppHandler(object):
         self.f.write(data)
         self.f.flush()
 
-
 class Main(object):
     def __init__(self):
         self.directory = 'received'
@@ -38,7 +37,7 @@ class Main(object):
         self.diff()
         self.filename = None
         self.loss = None
-        self.retransmit = False
+        self.retransmit = True
 
     def parse_options(self):
         parser = optparse.OptionParser(usage="%prog [options]",
@@ -83,9 +82,9 @@ class Main(object):
         Sim.scheduler.reset()
         Sim.set_debug('AppHandler')
         Sim.set_debug('TCP')
-
+        Sim.set_debug('Plot')
         # setup network
-        net = Network('../networks/one-hop-lab2-experiments.txt')
+        net = Network('../networks/one-hop-lab3.txt')
         net.loss(self.loss)
 
         # setup routes
@@ -102,8 +101,8 @@ class Main(object):
         a = AppHandler(self.filename)
 
         # setup connection
-        c1 = TCP(t1, n1.get_address('n2'), 1, n2.get_address('n1'), 1, self.retransmit, a, window=10000)
-        c2 = TCP(t2, n2.get_address('n1'), 1, n1.get_address('n2'), 1, self.retransmit, a, window=10000)
+        c1 = TCP(t1, n1.get_address('n2'), 1, n2.get_address('n1'), 1, self.retransmit, a, window=1000,drop=[14000])
+        c2 = TCP(t2, n2.get_address('n1'), 1, n1.get_address('n2'), 1, self.retransmit, a, window=1000)
 
         # send a file
         with open(self.filename, 'rb') as f:

@@ -37,7 +37,7 @@ class Main(object):
         self.diff()
         self.filename = None
         self.loss = None
-        self.retransmit = False
+        self.retransmit = True
 
     def parse_options(self):
         parser = optparse.OptionParser(usage="%prog [options]",
