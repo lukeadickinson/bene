@@ -1,0 +1,239 @@
+Basic Tests: 
+Carefully describe each test, show the last 5 to 10 lines of the output, 
+and discuss the time it takes to transfer the file in each case.
+
+
+Set the bandwidth of the links to 10 Mbps, with a propagation delay of 10 ms. 
+Transfer the file test.txt from n1 to n2 using a window size of 3000 bytes.
+Repeat this test, with loss rates of 0%, 10%, 20%, and 50%.
+
+
+python lab2-basic-1.py -f test.txt -l 0.0
+
+0%
+
+0.0524 application got 1000 bytes
+0.0524 n2 (2) sending TCP ACK to 1 for 7000
+0.0532 n2 (2) received TCP segment from 1 for 7000
+0.0532 application got 1000 bytes
+0.0532 n2 (2) sending TCP ACK to 1 for 8000
+0.054 n2 (2) received TCP segment from 1 for 8000
+0.054 application got 1000 bytes
+0.054 n2 (2) sending TCP ACK to 1 for 9000
+0.0624 n1 (1) sending TCP segment to 2 for 9000
+0.0732 n2 (2) received TCP segment from 1 for 9000
+0.0732 application got 1000 bytes
+0.0732 n2 (2) sending TCP ACK to 1 for 10000
+Success! both files match
+
+10%
+0.0524 application got 1000 bytes
+0.0524 n2 (2) sending TCP ACK to 1 for 7000
+0.0532 n2 (2) received TCP segment from 1 for 7000
+0.0532 application got 1000 bytes
+0.0532 n2 (2) sending TCP ACK to 1 for 8000
+0.054 n2 (2) received TCP segment from 1 for 8000
+0.054 application got 1000 bytes
+0.054 n2 (2) sending TCP ACK to 1 for 9000
+0.0624 n1 (1) sending TCP segment to 2 for 9000
+0.0732 n2 (2) received TCP segment from 1 for 9000
+0.0732 application got 1000 bytes
+0.0732 n2 (2) sending TCP ACK to 1 for 10000
+Success! both files match
+
+20%
+4.0732 application got 3000 bytes
+4.0732 n2 (2) sending TCP ACK to 1 for 8000
+4.0832 n1 (1) sending TCP segment to 2 for 8000
+4.0832 n1 (1) sending TCP segment to 2 for 9000
+4.094 n2 (2) received TCP segment from 1 for 8000
+4.094 application got 1000 bytes
+4.094 n2 (2) sending TCP ACK to 1 for 9000
+4.0948 n2 (2) received TCP segment from 1 for 9000
+4.0948 application got 1000 bytes
+4.0948 n2 (2) sending TCP ACK to 1 for 10000
+5.0832 n1 (1) sending TCP segment to 2 for 9000
+5.0832 n1 (1) retransmission timer fired
+5.094 n2 (2) received TCP segment from 1 for 9000
+5.094 application got 0 bytes
+5.094 n2 (2) sending TCP ACK to 1 for 10000
+Success! both files match
+
+50%
+19.0624 n1 (1) retransmission timer fired
+20.0624 n1 (1) sending TCP segment to 2 for 7000
+20.0624 n1 (1) retransmission timer fired
+20.0732 n2 (2) received TCP segment from 1 for 7000
+20.0732 application got 2000 bytes
+20.0732 n2 (2) sending TCP ACK to 1 for 9000
+21.0624 n1 (1) sending TCP segment to 2 for 7000
+21.0624 n1 (1) retransmission timer fired
+21.0732 n2 (2) received TCP segment from 1 for 7000
+21.0732 application got 0 bytes
+21.0732 n2 (2) sending TCP ACK to 1 for 9000
+21.0832 n1 (1) sending TCP segment to 2 for 9000
+22.0832 n1 (1) sending TCP segment to 2 for 9000
+22.0832 n1 (1) retransmission timer fired
+22.094 n2 (2) received TCP segment from 1 for 9000
+22.094 application got 1000 bytes
+22.094 n2 (2) sending TCP ACK to 1 for 10000
+Success! both files match
+
+Set the bandwidth of the links to 10 Mbps, with a propagation delay of 10 ms. 
+Transfer the file internet-architecture.pdf from n1 to n2 using a window 
+size of 10000 bytes. Repeat this test, with loss rates of 0% and 50%.
+
+python lab2-basic-2.py -f internet-architecture.pdf -l 0.0
+
+0%
+1.0624 n1 (1) sending TCP segment to 2 for 512000
+1.0632 n1 (1) sending TCP segment to 2 for 513000
+1.064 n1 (1) sending TCP segment to 2 for 514000
+1.0716 n2 (2) received TCP segment from 1 for 510000
+1.0716 application got 1000 bytes
+1.0716 n2 (2) sending TCP ACK to 1 for 511000
+1.0724 n2 (2) received TCP segment from 1 for 511000
+1.0724 application got 1000 bytes
+1.0724 n2 (2) sending TCP ACK to 1 for 512000
+1.0732 n2 (2) received TCP segment from 1 for 512000
+1.0732 application got 1000 bytes
+1.0732 n2 (2) sending TCP ACK to 1 for 513000
+1.074 n2 (2) received TCP segment from 1 for 513000
+1.074 application got 1000 bytes
+1.074 n2 (2) sending TCP ACK to 1 for 514000
+1.074416 n2 (2) received TCP segment from 1 for 514000
+1.074416 application got 520 bytes
+1.074416 n2 (2) sending TCP ACK to 1 for 514520
+Success! both files match
+
+50%
+396.0808 n1 (1) retransmission timer fired
+397.0808 n1 (1) sending TCP segment to 2 for 512000
+397.0808 n1 (1) retransmission timer fired
+398.0808 n1 (1) sending TCP segment to 2 for 512000
+398.0808 n1 (1) retransmission timer fired
+398.0916 n2 (2) received TCP segment from 1 for 512000
+398.0916 application got 2000 bytes
+398.0916 n2 (2) sending TCP ACK to 1 for 514000
+398.1016 n1 (1) sending TCP segment to 2 for 514000
+398.112016 n2 (2) received TCP segment from 1 for 514000
+398.112016 application got 520 bytes
+398.112016 n2 (2) sending TCP ACK to 1 for 514520
+399.1016 n1 (1) sending TCP segment to 2 for 514000
+399.1016 n1 (1) retransmission timer fired
+399.112016 n2 (2) received TCP segment from 1 for 514000
+399.112016 application got 0 bytes
+399.112016 n2 (2) sending TCP ACK to 1 for 514520
+Success! both files match
+
+Fast Retransmit: 
+Carefully describe your test, show the last 5 to 10 lines of the output, 
+and discuss how Fast Retransmit affects the transfer time.
+
+python lab2-fast-1.py -f internet-architecture.pdf -l 0.2
+without fast on:
+
+68.9648 n1 (1) sending TCP segment to 2 for 514000
+68.9756 n2 (2) received TCP segment from 1 for 508000
+68.9756 application got 3000 bytes
+68.9756 n2 (2) sending TCP ACK to 1 for 511000
+68.9764 n2 (2) received TCP segment from 1 for 509000
+68.9764 application got 0 bytes
+68.9764 n2 (2) sending TCP ACK to 1 for 511000
+68.9772 n2 (2) received TCP segment from 1 for 510000
+68.9772 application got 0 bytes
+68.9772 n2 (2) sending TCP ACK to 1 for 511000
+68.978 n2 (2) received TCP segment from 1 for 511000
+68.978 application got 2000 bytes
+68.978 n2 (2) sending TCP ACK to 1 for 513000
+68.9788 n2 (2) received TCP segment from 1 for 513000
+68.9788 application got 1000 bytes
+68.9788 n2 (2) sending TCP ACK to 1 for 514000
+68.979216 n2 (2) received TCP segment from 1 for 514000
+68.979216 application got 520 bytes
+68.979216 n2 (2) sending TCP ACK to 1 for 514520
+Success! both files match
+
+python lab2-fast-1.py -f internet-architecture.pdf -l 0.2 -r
+with fast on:
+
+33.3876 n2 (2) sending TCP ACK to 1 for 512000
+34.3768 n1 (1) sending TCP segment to 2 for 508000
+34.3768 n1 (1) retransmission timer fired
+34.3876 n2 (2) received TCP segment from 1 for 508000
+34.3876 application got 0 bytes
+34.3876 n2 (2) sending TCP ACK to 1 for 512000
+34.3976 n1 (1) sending TCP segment to 2 for 512000
+34.3976 n1 (1) sending TCP segment to 2 for 513000
+34.3976 n1 (1) sending TCP segment to 2 for 514000
+34.4084 n2 (2) received TCP segment from 1 for 513000
+34.4084 application got 0 bytes
+34.4084 n2 (2) sending TCP ACK to 1 for 512000
+34.408816 n2 (2) received TCP segment from 1 for 514000
+34.408816 application got 0 bytes
+34.408816 n2 (2) sending TCP ACK to 1 for 512000
+35.3976 n1 (1) sending TCP segment to 2 for 512000
+35.3976 n1 (1) retransmission timer fired
+35.4084 n2 (2) received TCP segment from 1 for 512000
+35.4084 application got 2520 bytes
+35.4084 n2 (2) sending TCP ACK to 1 for 514520
+Success! both files match
+
+Experiments: Carefully describe your experiments, include your graphs, 
+and explain how the throughput and queueing delay vary as the window size increases
+
+Using the same network configuration as above, set the bandwidth of the links to 10 Mbps, 
+with a propagation delay of 10 ms, a queue size of 100 and a loss rate of 0%. 
+Transfer the internet-architecture.pdf file using window sizes of 
+1000, 2000, 5000, 10000, 15000, and 20000 bytes. 
+
+queueing delay is mesaused as time spent in buffer? there isnt a queue.
+
+1000
+
+total bits sent: 514520
+total time to send: 10.701616
+throughput:48,078.72 * 8 = 384629.76
+
+average queueing delay :0
+
+2000
+total bits sent:514520
+total time to send:5.356016
+throughput: 96,063.94 * 8 = 768511.52
+
+average queueing delay :0.00000155339805825
+
+5000
+total bits sent:514520
+total time to send:2.135216
+throughput:240968.59 * = 1927748.72
+
+average queueing delay :0.0000155339805825
+
+10000
+total bits sent:514520
+total time to send:1.074416
+throughput: 478,883.41 * 8 = 3831067.28
+
+average queueing delay :0.0000699029126214
+
+15000
+total bits sent:514520
+total time to send:0.720816
+throughput:713,802.13 * 8 = 5710417.04
+
+average queueing delay :0.000163106796117
+
+20000
+total bits sent:514520
+total time to send:0.541616
+throughput:949,971.94 * 8 = 7599775.52 
+
+average queueing delay :0.000295145631068
+
+Compute the throughput of the transfer as the total bits sent divided by 
+the total time to send the file, measured from the start of the simulation 
+to when the last segment is received. Compute the average queueing delay of 
+all segments sent. Plot the throughput and the average queueing delay as a 
+function of the window size, on two separate graphs. 
