@@ -15,7 +15,7 @@ class BroadcastApp(object):
         self.node = node
 
     def receive_packet(self, packet):
-        print(Sim.scheduler.current_time(), self.node.hostname, packet.ident)
+        print(Sim.scheduler.current_time(), self.node.hostname, packet.ident, self.node.forwarding_table)
 
 
 def main():
