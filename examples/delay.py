@@ -32,6 +32,7 @@ class Generator(object):
         self.ident += 1
         p = Packet(destination_address=self.destination, ident=self.ident, protocol='delay', length=1000)
         Sim.scheduler.add(delay=0, event=p, handler=self.node.send_packet)
+        print(self.destination, "self.destination")
         # schedule the next time we should generate a packet
         Sim.scheduler.add(delay=random.expovariate(self.load), event='generate', handler=self.handle)
 
@@ -39,17 +40,15 @@ class Generator(object):
 class DelayHandler(object):
     @staticmethod
     def receive_packet(packet):
-        #print((Sim.scheduler.current_time(),
-               #packet.ident,
-               #packet.created,
-               #Sim.scheduler.current_time() - packet.created,
-               #packet.transmission_delay,
-               #packet.propagation_delay,
-               #packet.queueing_delay))
-        f1=open('./experiment'+ str(myLoadPercent)+'.txt', 'a+')
-        f1.write(str(packet.queueing_delay) +"\n")
-
-
+        print((Sim.scheduler.current_time(),
+               packet.ident,
+               packet.created,
+               Sim.scheduler.current_time() - packet.created,
+               packet.transmission_delay,
+               packet.propagation_delay,
+               packet.queueing_delay))
+        #f1=open('./experiment'+ str(myLoadPercent)+'.txt', 'a+')
+        #f1.write(str(packet.queueing_delay) +"\n")
 def main():
     # parameters
     Sim.scheduler.reset()
@@ -64,6 +63,8 @@ def main():
     n1.add_forwarding_entry(address=n2.get_address('n1'), link=n1.links[0])
     n2.add_forwarding_entry(address=n1.get_address('n2'), link=n2.links[0])
 
+
+
     # setup app
     d = DelayHandler()
     net.nodes['n2'].add_protocol(protocol="delay", handler=d)
@@ -72,6 +73,10 @@ def main():
     destination = n2.get_address('n1')
     max_rate = 1000000 // (1000 * 8)
     load = myLoadPercent/100.0 * max_rate
+
+    print(n2.get_address('n1'), n1.links[0].address)
+    print(n1.get_address('n2'), n2.links[0].address)
+    print(destination)
     g = Generator(node=n1, destination=destination, load=load, duration=10)
     Sim.scheduler.add(delay=0, event='generate', handler=g.handle)
 
